@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .d-flex {
+            display: flex;
+        }
+
+        .d-flex-justify-between {
+            justify-content: space-between;
+        }
+
+        .d-flex-grow {
+            flex-grow: 1;
+        }
+
+        .wrapper {
+            font-size: 20px;
+            width: 100%;
+            margin: 24px 0;
+        }
+
+        .level1 {
+            font-weight: 700;
+            margin-top: 24px;
+            margin-bottom: 8px;
+        }
+
+        .level2 {
+            font-weight: 600;
+            padding-left: 12px;
+            margin-bottom: 8px;
+        }
+
+        .level3 {
+            font-weight: 600;
+            padding-left: 24px;
+        }
+
+        .logo {
+            width: fit-content;
+            padding: 16px 36px 8px 36px;
+            background-color: blanchedalmond;
+            margin: 0 auto;
+            font-size: 24px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .input-area {
+            background-color: blanchedalmond;
+            padding: 16px 24px;
+            width: fit-content;
+            margin: 0px auto;
+        }
+
+        container {
+            border-radius: 12px;
+            display: block;
+        }
+
+        fixed {
+            min-width: 100px;
+        }
+
+        sub-title {
+            min-width: 150px;
+        }
+
+        .item-area {
+            height: 100%;
+        }
+
+
+        .item-do-area,
+        .item-done-area {
+            margin: 0 16px;
+            width: 50%;
+            border: 2px dashed;
+            padding: 16px 24px;
+            min-height: 500px;
+        }
+
+        .item-do-area {
+            border-color: #FFE4C4;
+        }
+
+        .item-done-area {
+            border-color: #ccc;
+        }
+
+        .item {
+            padding: 16px 24px;
+            margin-bottom: 8px;
+            background-color: #FFE4C4;
+            font-size: 16px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <button id="level1">Level1</button>
+    <button id="level2">Level2</button>
+    <button id="level3">Level3</button> -->
+    <container class="logo">Task</container>
+    <container class="input-area">
+        <input type="text" id="taskName" name="taskName" maxlength="500" placeholder="Task Name">
+        <input type="date" id="dueDate" name="dueDate" placeholder="Due date">
+        <input type="number" id="piority" name="piority" min="1" max="4" placeholder="Priority">
+    </container>
+    <div class="wrapper">
+
+        <div class="item-area d-flex">
+            <div id="do" class="item-do-area d-flex-grow" ondrop="drop(event)" ondragover="allowDrop(event)">
+                <container id="#1" draggable="true" ondragstart="drag(event)" ondblclick="doneTask(event)"
+                    class="item d-flex d-flex-justify-between">
+                    <sub-title>Lấy dữ liệu bàn làm việc</sub-title>
+                    <fixed>Today</fixed>
+                    <fixed>Ưu tiên:</fixed>
+                    <fixed>Hạn: </fixed>
+                </container>
+                <container id="#2" draggable="true" ondragstart="drag(event)" ondblclick="doneTask(event)"
+                    class="item d-flex d-flex-justify-between">
+                    <sub-title>Lấy dữ liệu bàn làm việc</sub-title>
+                    <fixed>Today</fixed>
+                    <fixed>Ưu tiên:</fixed>
+                    <fixed>Hạn: </fixed>
+                </container>
+                <container id="#3" draggable="true" ondragstart="drag(event)" ondblclick="doneTask(event)"
+                    class="item d-flex d-flex-justify-between">
+                    <sub-title>Lấy dữ liệu bàn làm việc</sub-title>
+                    <fixed>Today</fixed>
+                    <fixed>Ưu tiên:</fixed>
+                    <fixed>Hạn: </fixed>
+                </container>
+            </div>
+
+            <div id="done" class="item-done-area d-flex-grow" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        </div>
+
+    </div>
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
+    <script>
+        function doneTask(ev) {
+            document.getElementById("done").appendChild(ev.currentTarget);
+            ev.currentTarget.style.backgroundColor = '#ccc';
+        }
+
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", ev.target.id);
+        }
+
+        function drop(ev) {
+            ev.preventDefault();
+            var data = ev.dataTransfer.getData("text");
+            switch (ev.target.id) {
+                case "do":
+                    document.getElementById(data).style.backgroundColor = '#FFE4C4';
+                    ev.target.appendChild(document.getElementById(data));
+
+                    break;
+                case "done":
+                    document.getElementById(data).style.backgroundColor = '#ccc';
+                    ev.target.appendChild(document.getElementById(data));
+                    break;
+
+            }
+        }
+
+        // $(document).ready(function () {
+        //     $("#level1").click(function (e) {
+
+        //     });
+
+        //     $("#level2").click(function (e) {
+
+        //     });
+
+        //     $("#level3").click(function (e) {
+
+        //     });
+
+
+        //     const level1 = $(".level1");
+        //     const level2 = $(".level2");
+        //     const level3 = $(".level3");
+
+        //     const actionState = (state) => {
+        //         return state == "open" ? "close" : "open";
+        //     }
+
+        //     level1.click(function () {
+        //         const me = $(this);
+        //         const state = me.attr("state");
+        //         const elmAction = me.nextUntil(".level1", "div");
+        //         // đang mở thì đóng
+        //         if (state == "open") {
+        //             elmAction.hide();
+        //         }
+        //         else {
+        //             elmAction.filter(function (index) {
+        //                 return $(this).attr("childlv1") == "open";
+        //             }).show();
+        //         }
+        //         me.attr("state", actionState(state));
+        //     });
+
+        //     level2.click(function () {
+        //         const me = $(this);
+        //         const state = me.attr("state");
+        //         let elmAction = me.nextUntil(".level2", "div");
+        //         if (elmAction.hasClass("level1")) {
+        //             elmAction = me.nextUntil(".level1", "div");
+        //         }
+        //         // đang mở thì đóng
+        //         if (state == "open") {
+        //             elmAction.hide();
+        //             elmAction.attr("child", function (index, attr) {
+        //                 return attr == "open" ? "close" : "open";
+        //             });
+        //         }
+        //         else {
+        //             elmAction.attr("child", function (index, attr) {
+        //                 return attr == "open" ? "close" : "open";
+        //             });
+        //             elmAction.filter(function (index) {
+        //                 return $(this).attr("state") == "open" || $(this).attr("child") == "open";
+        //             }).show();
+        //         }
+        //         me.attr("state", actionState(state));
+        //         elmAction.attr("childlv1", actionState(state));
+        //     });
+
+        //     level3.click(function () {
+        //         const me = $(this);
+        //         const state = me.attr("state");
+        //         let elmAction = me.nextUntil(".level3", "div");
+        //         if (elmAction.hasClass("level2")) {
+        //             elmAction = me.nextUntil(".level2", "div");
+        //         }
+        //         if (elmAction.hasClass("level1")) {
+        //             elmAction = me.nextUntil(".level1", "div");
+        //         }
+        //         // đang mở thì đóng
+        //         if (state == "open") {
+        //             elmAction.hide();
+        //         }
+        //         else {
+        //             elmAction.show();
+        //         }
+        //         elmAction.attr("child", actionState(state));
+        //         elmAction.attr("childlv1", actionState(state));
+        //         me.attr("state", actionState(state));
+        //     });
+
+
+
+
+        // });
+    </script>
+</body>
+
+</html>
